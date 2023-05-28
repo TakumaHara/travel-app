@@ -38,6 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.7.0
   firebase_auth: ^4.2.9
+  google_maps_flutter: ^2.2.6
+  fluster: ^1.2.0
+  marker_icon: ^0.7.1
+  custom_map_markers: ^0.0.2+1
 
 dev_dependencies:
   flutter_test:
