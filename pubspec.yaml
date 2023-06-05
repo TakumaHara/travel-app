@@ -42,6 +42,7 @@ dependencies:
   fluster: ^1.2.0
   marker_icon: ^0.7.1
   custom_map_markers: ^0.0.2+1
+  cloud_firestore: ^4.7.1
 
 dev_dependencies:
   flutter_test:

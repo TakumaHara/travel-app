@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatefulWidget {
-  static const String id = 'register_screen';
-  const RegisterScreen({Key? key}) : super(key: key);
+import 'map_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  static const String id = 'login_screen';
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String? infoText;
@@ -29,16 +31,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ElevatedButton(onPressed: () async {
             try{
               final FirebaseAuth auth = FirebaseAuth.instance;
-              final UserCredential user = await auth.createUserWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text
-              );
+              await auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+              await  Navigator.pushNamed(context, MapScreen.id);
             }catch(e){
               setState(() {
                 infoText = "ログインに失敗しました";
               });
             }
-          }, child: Text("Register")),
+          }, child: Text("Login")),
           infoText!=null?Text(infoText!):SizedBox()
         ],
       ),
