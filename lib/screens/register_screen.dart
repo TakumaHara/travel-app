@@ -35,10 +35,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   password: passwordController.text
               );
               await  Navigator.pushNamed(context, MapScreen.id);
-            }catch(e){
-              setState(() {
-                infoText = "ログインに失敗しました";
-              });
+            }on FirebaseAuthException catch (e) {
+              if (e.code == 'email-already-in-use') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('指定したメールアドレスは登録済みです'),
+                  ),
+                );
+                print('指定したメールアドレスは登録済みです');
+              } else if (e.code == 'invalid-email') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('メールアドレスのフォーマットが正しくありません'),
+                  ),
+                );
+                print('メールアドレスのフォーマットが正しくありません');
+              } else if (e.code == 'operation-not-allowed') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('指定したメールアドレス・パスワードは現在使用できません'),
+                  ),
+                );
+                print('指定したメールアドレス・パスワードは現在使用できません');
+              } else if (e.code == 'weak-password') {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('パスワードは６文字以上にしてください'),
+                  ),
+                );
+                print('パスワードは６文字以上にしてください');
+              }
             }
           }, child: Text("Register")),
           infoText!=null?Text(infoText!):SizedBox()

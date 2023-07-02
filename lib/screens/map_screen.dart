@@ -20,7 +20,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<Set<Marker>>fetchData() async {
     Set<Marker> temp = <Marker>{};
-    var doc = await FirebaseFirestore.instance.collection("users").doc("MJa9qeJWiRdVovP00W9L3dc6lHR2").collection("markers").get();
+    var doc = await FirebaseFirestore.instance.collection("users").doc(currentUser!.uid).collection("markers").get();
     for(var item in doc.docs){
       Marker marker = Marker(
         position:LatLng(item.data()["latlng"].latitude,item.data()["latlng"].longitude) ,
@@ -49,7 +49,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MJa9qeJWiRdVovP00W9L3dc6lHR2"),
+        title: Text(currentUser!.uid),
       ),
       body:  FutureBuilder(
         future: markers,
